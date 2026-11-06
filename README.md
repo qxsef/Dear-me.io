@@ -12,3 +12,4 @@ Status: **Tahap 1 selesai** (fondasi, database, auth, beranda). Tahap 2: diary, 
 1. Buat repo publik bernama `Dear-me.io`, unggah semua isi folder ini (index.html di root).
 2. Settings → Pages → Source: *Deploy from a branch* → `main` / `/ (root)` → Save.
 3. Buka `https://USERNAME.github.io/Dear-me.io/` setelah ±1 menit.
+
