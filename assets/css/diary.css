@@ -1,1 +1,10 @@
 /* Tahap 2: gaya editor jurnal */
+.dwrap{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+.dlist{display:grid;gap:10px}.dlist ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:60vh;overflow:auto}
+.dlist li button{width:100%;text-align:left;border:1px solid var(--l1);background:var(--bg);border-radius:14px;padding:10px 12px;cursor:pointer;font:inherit;color:var(--text)}
+.dlist li button:hover,.dlist li button.on{background:var(--l1);border-color:var(--l3)}
+.dlist li b{display:block;color:var(--ink)}.dlist li span{font-size:.8rem;opacity:.75}
+.deditor{display:grid;gap:12px}#title{font:600 1.4rem "Fraunces",Georgia,serif;border:0;border-bottom:2px solid var(--l1);border-radius:0;padding:8px 2px}
+#content{resize:vertical;line-height:1.8;min-height:50vh}
+.drow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+@media (max-width:820px){.dwrap{grid-template-columns:1fr}.dlist ul{max-height:35vh}}
