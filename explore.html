@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Explore — DEAR ME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/anonymous.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main>
+<h2 data-i18n="explore"></h2>
+<div class="filters"><input id="q" type="search" data-i18n-ph="eSearch">
+<select id="fcat"><option value="" data-i18n="eAll"></option><option value="general" data-i18n="c_general"></option><option value="love" data-i18n="c_love"></option><option value="study" data-i18n="c_study"></option><option value="family" data-i18n="c_family"></option><option value="hope" data-i18n="c_hope"></option><option value="vent" data-i18n="c_vent"></option></select></div>
+<div id="msgs" class="mgrid"></div>
+<p id="empty" class="card tint" hidden><span data-i18n="eEmpty"></span> <a href="anonymous.html" data-i18n="anonymous"></a></p>
+<p style="text-align:center"><button class="btn ghost" id="more" hidden data-i18n="eMore"></button></p>
+</main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/explore.js"></script>
+</body></html>
