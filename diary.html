@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Diary — DEAR ME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/diary.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main class="dwrap">
+<aside class="card dlist">
+<button class="btn" id="newBtn" data-i18n="dNew"></button>
+<input id="search" type="search" data-i18n-ph="dSearch">
+<select id="sort"><option value="desc" data-i18n="dNewest"></option><option value="asc" data-i18n="dOldest"></option></select>
+<ul id="list"></ul>
+</aside>
+<section class="card deditor">
+<input id="title" maxlength="150" data-i18n-ph="dTitle">
+<textarea id="content" rows="14" maxlength="20000" data-i18n-ph="dContent"></textarea>
+<p class="small" id="meta"></p>
+<div class="drow"><button class="btn" id="saveBtn" data-i18n="dSave"></button><button class="btn ghost" id="delBtn" data-i18n="dDelete"></button><span class="small" id="status"></span></div>
+</section>
+</main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/diary.js"></script>
+</body></html>
