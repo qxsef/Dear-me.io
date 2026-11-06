@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Profile — DEAR ME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/auth.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main><div class="card auth">
+<h2 data-i18n="profile"></h2>
+<img id="avatar" alt="" hidden style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--l2)">
+<form id="pForm" novalidate>
+<label for="uname" data-i18n="username"></label><input id="uname" maxlength="30">
+<label for="avurl" data-i18n="pAvatar"></label><input id="avurl" type="url" placeholder="https://…">
+<label for="plang" data-i18n="pLang"></label><select id="plang"><option value="id">Bahasa Indonesia</option><option value="en">English</option></select>
+<label data-i18n="email"></label><input id="pemail" disabled>
+<p class="small" id="pjoined"></p>
+<button class="btn" type="submit" data-i18n="pSave"></button>
+</form>
+<p><a class="btn ghost" id="adminLink" href="admin.html" hidden>Admin</a></p>
+<button class="btn ghost" id="pOut" data-i18n="logout"></button>
+</div></main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/profile.js"></script>
+</body></html>
