@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Register — DEAR ME</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/auth.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main><div class="card auth"><h2 data-i18n="registerTitle"></h2>
+<form id="authForm" data-mode="register" novalidate>
+<label for="username" data-i18n="username"></label><input id="username" name="username" maxlength="30" autocomplete="nickname" required>
+<label for="email" data-i18n="email"></label><input id="email" name="email" type="email" autocomplete="email" required>
+<label for="password" data-i18n="password"></label><input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required>
+<label for="confirm" data-i18n="confirm"></label><input id="confirm" name="confirm" type="password" autocomplete="new-password" required>
+<button class="btn" type="submit" data-i18n="register"></button></form>
+<p><span data-i18n="haveAccount"></span> <a href="login.html" data-i18n="login"></a></p></div></main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/auth.js"></script></body></html>
