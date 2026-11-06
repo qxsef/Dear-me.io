@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anonymous — DEAR ME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/anonymous.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main>
+<div class="card amain">
+<h2 data-i18n="anonTitle"></h2><p data-i18n="aIntro"></p>
+<form id="msgForm" novalidate>
+<label for="cat" data-i18n="aCategory"></label>
+<select id="cat"><option value="general" data-i18n="c_general"></option><option value="love" data-i18n="c_love"></option><option value="study" data-i18n="c_study"></option><option value="family" data-i18n="c_family"></option><option value="hope" data-i18n="c_hope"></option><option value="vent" data-i18n="c_vent"></option></select>
+<label for="text" data-i18n="aMessage"></label>
+<textarea id="text" rows="6" maxlength="500" data-i18n-ph="aPlaceholder"></textarea>
+<input id="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+<p class="small"><span id="count">0</span>/500</p>
+<button class="btn" type="submit" id="sendBtn" data-i18n="aSend"></button>
+<p class="small" id="loginHint"></p>
+</form>
+<p><a href="explore.html" data-i18n="explore"></a></p>
+</div>
+</main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/anonymous.js"></script>
+</body></html>
