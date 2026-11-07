@@ -6,7 +6,7 @@ const I18N = {
   privacyTitle:"Privasimu terjaga", privacyText:"Jurnal dilindungi aturan database (RLS) sehingga hanya pemiliknya yang bisa mengaksesnya. Pesan anonim tidak menyimpan identitas yang bisa dilihat orang lain.",
   aboutTitle:"Tentang DEAR ME", aboutText:"Dibuat sebagai ruang yang tenang untuk menulis, melepas, dan saling menguatkan.", footer:"Dibuat dengan hati.",
   email:"Email", password:"Kata sandi", username:"Nama pengguna", confirm:"Ulangi kata sandi", haveAccount:"Sudah punya akun?", noAccount:"Belum punya akun?",
-  loginTitle:"Selamat datang kembali", registerTitle:"Buat akunmu", registered:"Akun dibuat. Cek email untuk konfirmasi jika diminta, lalu masuk.",
+  loginTitle:"Selamat datang kembali", registerTitle:"Buat akunmu",noReset:"Catat kata sandimu baik-baik. Tidak ada fitur lupa kata sandi.", registered:"Akun dibuat. Cek email untuk konfirmasi jika diminta, lalu masuk.",
   errEmail:"Format email tidak valid.", errPass:"Kata sandi minimal 8 karakter.", errMatch:"Kata sandi tidak sama.", errName:"Nama pengguna 2–30 karakter.", errGeneric:"Terjadi kesalahan. Coba lagi.", errLogin:"Email atau kata sandi salah.", errConfig:"Supabase belum dikonfigurasi. Isi assets/js/config.js." },
  en: { home:"Home", diary:"My Diary", anonymous:"Send Message", explore:"Explore", profile:"Profile", about:"About", login:"Log in", register:"Sign up", logout:"Log out",
   tagline:"A little space to express yourself.", heroText:"DEAR ME is a private digital journal and a warm place to share anonymous messages.", start:"Get Started",
