@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reset — DEAR ME</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/auth.css"><link rel="stylesheet" href="assets/css/responsive.css"></head><body>
+<header id="nav"></header>
+<main><div class="card auth"><h2 data-i18n="rTitle"></h2>
+<p id="invalid" hidden data-i18n="rInvalid"></p>
+<form id="resetForm" novalidate hidden>
+<label for="password" data-i18n="rNew"></label><input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required>
+<label for="confirm" data-i18n="confirm"></label><input id="confirm" name="confirm" type="password" autocomplete="new-password" required>
+<button class="btn" type="submit" data-i18n="rSave"></button></form>
+<p><a href="forgot.html" data-i18n="forgot"></a></p></div></main>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/js/config.js"></script><script src="assets/js/language.js"></script><script src="assets/js/app.js"></script><script src="assets/js/recover.js"></script>
+</body></html>
