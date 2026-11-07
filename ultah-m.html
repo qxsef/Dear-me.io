@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Untuk Mita 💜</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}[hidden]{display:none!important}
+body{font-family:system-ui,sans-serif;color:#4b2e83;background:linear-gradient(160deg,#ffd6ec,#d8c4f4 55%,#b99ae8);overflow:hidden;display:grid;place-items:center;text-align:center}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:5}
+.st{position:fixed;color:#fff;opacity:.8;animation:tw 3s infinite alternate;pointer-events:none}
+@keyframes tw{to{opacity:.15;transform:scale(1.5)}}
+.scene{display:none;padding:18px;max-width:480px;width:100%}.scene.on{display:block}
+h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
+.big{font-size:clamp(1.5rem,7vw,2.2rem)}
+.btn{border:0;background:#9575cd;color:#fff;padding:14px 26px;border-radius:99px;font:600 1.05rem inherit;font-family:inherit;box-shadow:0 8px 20px rgba(103,70,154,.35);cursor:pointer;margin-top:14px;transition:transform .15s}.btn:active{transform:scale(.94)}
+.chibi{width:min(58vw,230px);height:auto;filter:drop-shadow(0 10px 14px rgba(103,70,154,.3))}
+.bob{animation:bob 2s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-8px)}}
+.eyes{transform-origin:100px 108px;animation:bl 4s infinite}@keyframes bl{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.wave{transform-origin:136px 160px;animation:wv .6s infinite alternate ease-in-out}@keyframes wv{to{transform:rotate(-28deg)}}
+.bub{position:relative;background:#fff;border-radius:22px;padding:16px 18px;margin:6px auto 0;min-height:92px;display:grid;place-items:center;font-size:1.08rem;line-height:1.5;box-shadow:0 8px 24px rgba(103,70,154,.2)}
+.bub:before{content:"";position:absolute;top:-12px;left:50%;margin-left:-12px;border:12px solid transparent;border-top:0;border-bottom-color:#fff}
+.cake{font-size:5.5rem;line-height:1;cursor:pointer;user-select:none;margin:6px 0}.cake:active{transform:scale(.92)}
+.flame{display:inline-block;font-size:2.4rem;animation:fl .4s infinite alternate}@keyframes fl{to{transform:scale(1.15) rotate(6deg)}}
+#ph{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 8px 20px rgba(103,70,154,.3)}
+.b{position:fixed;bottom:-80px;font-size:2.6rem;animation:up linear forwards;pointer-events:none;z-index:4}@keyframes up{to{transform:translateY(-120vh)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<canvas id="c"></canvas>
+
+<div id="s0" class="scene on">
+<div style="font-size:4rem">🎁</div>
+<p>Psst… ada kejutan kecil buat</p>
+<h1>Mita Aulia Putri 💜</h1>
+<button class="btn" id="open">Buka kejutan ✨</button>
+</div>
+
+<div id="s1" class="scene">
+<svg class="chibi" viewBox="0 0 200 250" aria-label="Karakter chibi"><g class="bob">
+<ellipse cx="52" cy="125" rx="22" ry="42" fill="#4b2e83"/><ellipse cx="148" cy="125" rx="22" ry="42" fill="#4b2e83"/>
+<circle cx="100" cy="100" r="62" fill="#4b2e83"/>
+<rect x="64" y="150" width="72" height="62" rx="30" fill="#c9b3f0"/>
+<rect x="60" y="160" width="13" height="38" rx="6.5" fill="#ffe3d3" transform="rotate(15 66 162)"/>
+<g class="wave"><rect x="129" y="150" width="13" height="40" rx="6.5" fill="#ffe3d3" transform="rotate(-35 135 160)"/></g>
+<circle cx="100" cy="105" r="52" fill="#ffe3d3"/>
+<path d="M46 102Q58 44 100 46Q142 44 154 102Q130 72 100 80Q70 72 46 102Z" fill="#4b2e83"/>
+<g class="eyes"><ellipse cx="78" cy="110" rx="11" ry="14" fill="#2b1b4d"/><ellipse cx="122" cy="110" rx="11" ry="14" fill="#2b1b4d"/>
+<circle cx="82" cy="104" r="4.5" fill="#fff"/><circle cx="126" cy="104" r="4.5" fill="#fff"/><circle cx="74" cy="116" r="2" fill="#fff"/><circle cx="118" cy="116" r="2" fill="#fff"/></g>
+<ellipse cx="62" cy="128" rx="9" ry="5" fill="#ff9fb8" opacity=".75"/><ellipse cx="138" cy="128" rx="9" ry="5" fill="#ff9fb8" opacity=".75"/>
+<path d="M91 130Q100 142 109 130" stroke="#c0506b" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M100 6L74 58Q100 66 126 58Z" fill="#ff8fc7"/><path d="M90 30L110 30" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="8" r="7" fill="#ffe66d"/>
+<path d="M92 152L76 143V163Z M108 152L124 143V163Z" fill="#ff8fc7"/><circle cx="100" cy="153" r="5.5" fill="#ff6fb0"/>
+</g></svg>
+<div class="bub" id="bub"><span id="txt"></span></div>
+<button class="btn" id="next">Lanjut ➜</button>
+<div id="fin" hidden>
+<img id="ph" src="mita.jpg" alt="" onerror="this.remove()">
+<h1 id="ft">Selamat Ulang Tahun, Mita Aulia Putri! 🎉</h1>
+<div class="cake" id="cake"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
+<p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id), dari=(new URLSearchParams(location.search).get("dari")||"").slice(0,30);
+const M=["Haloo Mita! 👋 Ada yang spesial hari ini, jangan kabur dulu ya.",
+"Hari ini kamu resmi naik level 🎮 Semoga bonus HP, stamina, dan kesabarannya penuh!",
+"Makasih ya udah jadi sahabat online yang selalu ada, walau cuma lewat layar 💜",
+"Kamu tuh kayak wifi yang stabil: ilang sebentar aja langsung dicariin 📶",
+"Jangan lupa makan, minum air, dan tidur cukup ya. Aku perhatian nih, serius 🥺",
+"Kalau lagi capek atau sedih, cerita aja ke aku. Kapan pun, aku dengerin 🫶",
+"Semoga tahun ini penuh hal baik, rezeki lancar, dan semua mimpimu kesampaian ✨",
+"Aku nggak bisa traktir kue beneran, jadi kue virtual dulu ya 🎂 Siap tiup lilin?"];
+for(let k=0;k<45;k++){const s=document.createElement("i");s.className="st";s.textContent=["✦","✧","♡"][k%3];s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-delay:${Math.random()*3}s;font-size:${8+Math.random()*12}px`;document.body.appendChild(s);}
+const c=$("c"),x=c.getContext("2d");let W,H,P=[];
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener("resize",rs);
+function burst(){for(let n=0;n<150;n++)P.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*15,vy:Math.random()*-15-2,s:5+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:150})}
+(function loop(){x.clearRect(0,0,W,H);P=P.filter(p=>p.l>0);P.forEach(p=>{p.vy+=.25;p.x+=p.vx;p.y+=p.vy;p.r+=.2;p.l--;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="hsl("+p.h+",90%,65%)";x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});requestAnimationFrame(loop)})();
+function balloon(){const b=document.createElement("div");b.className="b";b.textContent=["🎈","🎉","💜","🎁","🌸"][Math.random()*5|0];b.style.left=Math.random()*92+"vw";b.style.animationDuration=(5+Math.random()*4)+"s";document.body.appendChild(b);setTimeout(()=>b.remove(),10000)}
+let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n>=a.length)clearInterval(ty)},28)}
+let i=0;
+$("open").onclick=()=>{$("s0").classList.remove("on");$("s1").classList.add("on");burst();say(M[0])};
+$("next").onclick=()=>{i++;if(i<M.length){say(M[i]);if(i===M.length-1)$("next").textContent="Tiup lilin 🎂"}else{$("bub").hidden=true;$("next").hidden=true;$("fin").hidden=false;burst()}};
+let blown=false;
+$("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";
+setTimeout(burst,500);setTimeout(burst,1000);setInterval(balloon,500);
+$("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊"+(dari?"<br><small>— dari "+dari.replace(/[<>&]/g,"")+", sahabat onlinemu</small>":"<br><small>— dari sahabat onlinemu</small>")};
+</script></body></html>
