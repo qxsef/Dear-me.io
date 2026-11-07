@@ -1,5 +1,5 @@
-Object.assign(I18N.id,{dNew:"Jurnal baru",dSearch:"Cari jurnal…",dNewest:"Terbaru dulu",dOldest:"Terlama dulu",dTitle:"Judul",dContent:"Tulis ceritamu di sini…",dSave:"Simpan",dDelete:"Hapus",dEmpty:"Belum ada jurnal. Mulai tulis yang pertama.",dSaved:"Tersimpan",dSaving:"Menyimpan…",dNeedTitle:"Isi judul dulu.",dConfirm:"Hapus jurnal ini? Tindakan ini tidak bisa dibatalkan.",dDeleted:"Jurnal dihapus",dCreated:"Dibuat",dEdited:"Diedit",dUntitled:"(tanpa judul)"});
-Object.assign(I18N.en,{dNew:"New entry",dSearch:"Search entries…",dNewest:"Newest first",dOldest:"Oldest first",dTitle:"Title",dContent:"Write your story here…",dSave:"Save",dDelete:"Delete",dEmpty:"No entries yet. Write your first one.",dSaved:"Saved",dSaving:"Saving…",dNeedTitle:"Add a title first.",dConfirm:"Delete this entry? This can't be undone.",dDeleted:"Entry deleted",dCreated:"Created",dEdited:"Edited",dUntitled:"(untitled)"});
+Object.assign(I18N.id,{dNew:"Jurnal baru",dSearch:"Cari jurnal…",dNewest:"Terbaru dulu",dOldest:"Terlama dulu",dTitle:"Judul",dContent:"Tulis ceritamu di sini…",dSave:"Simpan",dDelete:"Hapus",dEmpty:"Belum ada jurnal. Mulai tulis yang pertama.",dSaved:"Tersimpan",dSaving:"Menyimpan…",dNeedTitle:"Isi judul dulu.",dConfirm:"Hapus jurnal ini? Tindakan ini tidak bisa dibatalkan.",dDeleted:"Jurnal dihapus",dCreated:"Dibuat",dEdited:"Diedit",dUntitled:"(tanpa judul)",dPin:"📌 Sematkan",dUnpin:"📌 Lepas",dPinFirst:"Simpan jurnal dulu."});
+Object.assign(I18N.en,{dNew:"New entry",dSearch:"Search entries…",dNewest:"Newest first",dOldest:"Oldest first",dTitle:"Title",dContent:"Write your story here…",dSave:"Save",dDelete:"Delete",dEmpty:"No entries yet. Write your first one.",dSaved:"Saved",dSaving:"Saving…",dNeedTitle:"Add a title first.",dConfirm:"Delete this entry? This can't be undone.",dDeleted:"Entry deleted",dCreated:"Created",dEdited:"Edited",dUntitled:"(untitled)",dPin:"📌 Pin",dUnpin:"📌 Unpin",dPinFirst:"Save the entry first."});
 
 let items = [], cur = null, saving = false, timer = null;
 const $ = id => document.getElementById(id);
@@ -7,9 +7,9 @@ const fmt = d => new Date(d).toLocaleString(getLang()==="id"?"id-ID":"en-US",{da
 
 function renderList(){
   const q = $("search").value.trim().toLowerCase();
-  const rows = items.filter(i => (i.title+" "+i.content).toLowerCase().includes(q));
-  $("list").innerHTML = rows.length ? rows.map(i=>`<li><button data-id="${esc(i.id)}" class="${i.id===cur?"on":""}"><b>${esc(i.title)||t("dUntitled")}</b><span>${fmt(i.created_at)}</span></button></li>`).join("") : `<li class="small">${t("dEmpty")}</li>`;
-  $("list").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>open(b.dataset.id)));
+  const rows = items.filter(i => (i.title+" "+i.content).toLowerCase().includes(q)).sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+  $("list").innerHTML = rows.length ? rows.map(i=>`<li><button data-id="${esc(i.id)}" class="${i.id===cur?"on":""}"><b>${i.pinned?"📌 ":""}${esc(i.title)||t("dUntitled")}</b><span>${fmt(i.created_at)}</span></button></li>`).join("") : `<li class="small">${t("dEmpty")}</li>`;
+  $("list").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>open(b.dataset.id)));pinLabel();
 }
 function open(id){
   const i = items.find(x=>x.id===id); cur = id;
@@ -18,7 +18,7 @@ function open(id){
   $("status").textContent = ""; renderList();
 }
 async function load(){
-  const { data, error } = await sb.from("diaries").select("id,title,content,created_at,updated_at").order("created_at",{ascending:$("sort").value==="asc"});
+  const { data, error } = await sb.from("diaries").select("id,title,content,pinned,created_at,updated_at").order("created_at",{ascending:$("sort").value==="asc"});
   if(error) return toast(error.message,"err");
   items = data; renderList();
 }
@@ -42,12 +42,20 @@ async function del(){
   if(error) return toast(error.message,"err");
   items = items.filter(x=>x.id!==cur); cur = null; open(null); toast(t("dDeleted"));
 }
+function pinLabel(){ const i = items.find(x=>x.id===cur); $("pinBtn").textContent = i && i.pinned ? t("dUnpin") : t("dPin"); }
+async function pin(){
+  const i = items.find(x=>x.id===cur); if(!i) return toast(t("dPinFirst"),"err");
+  const { data, error } = await sb.from("diaries").update({pinned:!i.pinned}).eq("id",cur).select().single();
+  if(error) return toast(error.message,"err");
+  items[items.indexOf(i)] = data; renderList();
+}
 (async()=>{
   if(!sb) return toast(t("errConfig"),"err");
   if(!(await requireAuth())) return;
   $("newBtn").onclick = ()=>open(null);
   $("saveBtn").onclick = ()=>save(false);
   $("delBtn").onclick = del;
+  $("pinBtn").onclick = pin;
   $("search").oninput = renderList; $("sort").onchange = load;
   const auto = ()=>{ clearTimeout(timer); timer = setTimeout(()=>save(true),1500); };
   $("title").oninput = auto; $("content").oninput = auto;
