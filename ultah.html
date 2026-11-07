@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Selamat Ulang Tahun</title>
+<style>
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{display:grid;place-items:center;text-align:center;font-family:system-ui,sans-serif;color:#fff;background:linear-gradient(160deg,#67469a,#b99ae8);overflow:hidden}
+canvas{position:fixed;inset:0;pointer-events:none}
+.wrap{position:relative;z-index:1;padding:20px;max-width:560px}
+h1{font-size:clamp(2rem,9vw,3.4rem);margin:.2em 0}
+p{opacity:.92;margin:.4em 0 1em;min-height:3em}
+.cake{font-size:5rem;cursor:pointer;user-select:none;transition:transform .2s;line-height:1.1}.cake:active{transform:scale(.92)}
+.flame{display:inline-block;animation:fl .4s infinite alternate;font-size:2.2rem}
+@keyframes fl{to{transform:scale(1.15) rotate(6deg)}}
+.b{position:fixed;bottom:-80px;font-size:2.6rem;animation:up linear forwards;pointer-events:none}
+@keyframes up{to{transform:translateY(-120vh)}}
+@media (prefers-reduced-motion:reduce){.flame,.b{animation:none}}
+</style></head><body>
+<canvas id="c"></canvas>
+<div class="wrap">
+<div id="cake" class="cake" role="button" aria-label="Tiup lilin"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
+<h1 id="t">Selamat Ulang Tahun!</h1>
+<p id="m">Tap kue untuk meniup lilin 🎉</p>
+</div>
+<script>
+const nama = (new URLSearchParams(location.search).get("nama")||"").slice(0,30);
+if(nama) document.getElementById("t").textContent = "Selamat Ulang Tahun, "+nama+"!";
+const pesan = Array.from("Semoga panjang umur, sehat selalu, dan semua harapanmu terwujud ✨"); // ganti ucapanmu di sini
+const c = document.getElementById("c"), x = c.getContext("2d"); let W,H,P=[];
+function rs(){ W=c.width=innerWidth; H=c.height=innerHeight; } rs(); addEventListener("resize",rs);
+function burst(){ for(let i=0;i<140;i++) P.push({x:W/2,y:H/2,vx:(Math.random()-.5)*14,vy:Math.random()*-14-2,s:4+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:140}); }
+(function loop(){
+  x.clearRect(0,0,W,H); P=P.filter(p=>p.l>0);
+  P.forEach(p=>{ p.vy+=.25; p.x+=p.vx; p.y+=p.vy; p.r+=.2; p.l--; x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle="hsl("+p.h+",90%,65%)"; x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); x.restore(); });
+  requestAnimationFrame(loop);
+})();
+function balloon(){
+  const b=document.createElement("div"); b.className="b"; b.textContent=["🎈","🎉","💜","🎁"][Math.random()*4|0];
+  b.style.left=Math.random()*92+"vw"; b.style.animationDuration=(5+Math.random()*4)+"s";
+  document.body.appendChild(b); setTimeout(()=>b.remove(),10000);
+}
+let blown=false;
+document.getElementById("cake").onclick=()=>{
+  burst(); if(blown) return; blown=true;
+  document.getElementById("flame").style.visibility="hidden";
+  const m=document.getElementById("m"); m.textContent=""; let i=0;
+  const tm=setInterval(()=>{ m.textContent+=pesan[i++]; if(i>=pesan.length) clearInterval(tm); },45);
+  setInterval(balloon,500);
+};
+</script></body></html>
