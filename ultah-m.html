@@ -2,13 +2,24 @@
 <style>
 *{box-sizing:border-box}html,body{height:100%;margin:0}[hidden]{display:none!important}
 body{font-family:system-ui,sans-serif;color:#4b2e83;background:linear-gradient(160deg,#ffd6ec,#d8c4f4 55%,#b99ae8);overflow:hidden;display:grid;place-items:center;text-align:center}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+.blob{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(60px);opacity:.55;animation:dr 18s ease-in-out infinite alternate}
+.blob:nth-child(1){background:#ffb3d9;left:-20vmax;top:-20vmax}
+.blob:nth-child(2){background:#b99ae8;right:-25vmax;top:10vh;animation-duration:22s}
+.blob:nth-child(3){background:#ffe3b3;left:10vw;bottom:-30vmax;animation-duration:26s}
+@keyframes dr{to{transform:translate(10vw,8vh) scale(1.2)}}
 canvas{position:fixed;inset:0;pointer-events:none;z-index:5}
-.st{position:fixed;color:#fff;opacity:.8;animation:tw 3s infinite alternate;pointer-events:none}
+.st{position:fixed;color:#fff;opacity:.8;animation:tw 3s infinite alternate;pointer-events:none;z-index:0}
 @keyframes tw{to{opacity:.15;transform:scale(1.5)}}
-.scene{display:none;padding:18px;max-width:480px;width:100%}.scene.on{display:block}
+.pt{position:fixed;top:-40px;z-index:1;pointer-events:none;opacity:.85;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(50px,115vh) rotate(360deg)}}
+.ss{position:fixed;width:90px;height:2px;background:linear-gradient(90deg,#fff,transparent);z-index:0;pointer-events:none;animation:sh 1.1s linear forwards}
+@keyframes sh{from{opacity:1;transform:translate(0,0) rotate(-30deg)}to{opacity:0;transform:translate(-60vw,35vh) rotate(-30deg)}}
+.mute{position:fixed;top:12px;right:12px;z-index:9;border:0;background:rgba(255,255,255,.75);border-radius:50%;width:42px;height:42px;font-size:1.2rem;cursor:pointer}
+.scene{display:none;padding:18px;max-width:480px;width:100%;position:relative;z-index:2}.scene.on{display:block}
 h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
-.big{font-size:clamp(1.5rem,7vw,2.2rem)}
-.btn{border:0;background:#9575cd;color:#fff;padding:14px 26px;border-radius:99px;font:600 1.05rem inherit;font-family:inherit;box-shadow:0 8px 20px rgba(103,70,154,.35);cursor:pointer;margin-top:14px;transition:transform .15s}.btn:active{transform:scale(.94)}
+.big{font-size:clamp(1.3rem,6vw,1.9rem)}
+.btn{border:0;background:#9575cd;color:#fff;padding:14px 26px;border-radius:99px;font-weight:600;font-size:1.05rem;font-family:inherit;box-shadow:0 8px 20px rgba(103,70,154,.35);cursor:pointer;margin-top:14px;transition:transform .15s}.btn:active{transform:scale(.94)}
 .chibi{width:min(58vw,230px);height:auto;filter:drop-shadow(0 10px 14px rgba(103,70,154,.3))}
 .bob{animation:bob 2s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-8px)}}
 .eyes{transform-origin:100px 108px;animation:bl 4s infinite}@keyframes bl{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
@@ -21,13 +32,16 @@ h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
 .b{position:fixed;bottom:-80px;font-size:2.6rem;animation:up linear forwards;pointer-events:none;z-index:4}@keyframes up{to{transform:translateY(-120vh)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
+<div class="bg"><i class="blob"></i><i class="blob"></i><i class="blob"></i></div>
 <canvas id="c"></canvas>
+<button id="mute" class="mute" aria-label="Suara" hidden>🔊</button>
 
 <div id="s0" class="scene on">
 <div style="font-size:4rem">🎁</div>
 <p>Psst… ada kejutan kecil buat</p>
 <h1>Mita Aulia Putri 💜</h1>
 <button class="btn" id="open">Buka kejutan ✨</button>
+<p><small>🔊 Nyalakan suara HP-mu ya</small></p>
 </div>
 
 <div id="s1" class="scene">
@@ -50,34 +64,60 @@ h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
 <button class="btn" id="next">Lanjut ➜</button>
 <div id="fin" hidden>
 <img id="ph" src="mita.jpg" alt="" onerror="this.remove()">
-<h1 id="ft">Selamat Ulang Tahun, Mita Aulia Putri! 🎉</h1>
+<h1>Selamat Ulang Tahun, Mita Aulia Putri! 🎉</h1>
 <div class="cake" id="cake"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
 <p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
 </div>
 </div>
 
 <script>
-const $=id=>document.getElementById(id), dari=(new URLSearchParams(location.search).get("dari")||"").slice(0,30);
+const $=id=>document.getElementById(id), dari=(new URLSearchParams(location.search).get("dari")||"").slice(0,30).replace(/[<>&"]/g,"");
 const M=["Haloo Mita! 👋 Ada yang spesial hari ini, jangan kabur dulu ya.",
-"Hari ini kamu resmi naik level 🎮 Semoga bonus HP, stamina, dan kesabarannya penuh!",
+"Hari ini kamu resmi naik level 🎮 Semoga sehat, tangguh , dan kesabarannya penuh!",
 "Makasih ya udah jadi sahabat online yang selalu ada, walau cuma lewat layar 💜",
-"Kamu tuh kayak wifi yang stabil: ilang sebentar aja langsung dicariin 📶",
+"Kamu tuh kayak wifi yang stabil: ilang sebentar aja langsung dicariin kayaknya hehe ",
 "Jangan lupa makan, minum air, dan tidur cukup ya. Aku perhatian nih, serius 🥺",
 "Kalau lagi capek atau sedih, cerita aja ke aku. Kapan pun, aku dengerin 🫶",
 "Semoga tahun ini penuh hal baik, rezeki lancar, dan semua mimpimu kesampaian ✨",
 "Aku nggak bisa traktir kue beneran, jadi kue virtual dulu ya 🎂 Siap tiup lilin?"];
-for(let k=0;k<45;k++){const s=document.createElement("i");s.className="st";s.textContent=["✦","✧","♡"][k%3];s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-delay:${Math.random()*3}s;font-size:${8+Math.random()*12}px`;document.body.appendChild(s);}
+
+/* ===== Suara (dibuat dari kode) ===== */
+let AC,master,muted=false;
+function initAudio(){
+  if(AC){AC.resume();return}
+  AC=new (window.AudioContext||window.webkitAudioContext)(); master=AC.createGain(); master.gain.value=.5; master.connect(AC.destination);
+  const ch=[[261.63,329.63,392],[220,261.63,329.63],[174.61,220,261.63],[196,246.94,293.66]]; let k=0;
+  const go=()=>{const t=AC.currentTime; ch[k++%4].forEach(f=>tone(f,t,4.2,.05,"triangle",1))}; go(); setInterval(go,4000);
+}
+function tone(f,t,d,v=.22,type="sine",a=.01){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+a);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
+function bell(f,t,d){tone(f,t,d,.22);tone(f*2,t,d*.6,.08);tone(f*3,t,d*.3,.03)}
+function tick(){if(AC)tone(900+Math.random()*300,AC.currentTime,.05,.03)}
+function pop(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(700,t);o.frequency.exponentialRampToValueAtTime(120,t+.15);g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);o.connect(g);g.connect(master);o.start(t);o.stop(t+.2)}
+function chime(){if(!AC)return;const t=AC.currentTime;[523.25,659.25,783.99,1046.5].forEach((f,i)=>bell(f,t+i*.09,1.1))}
+function blow(){if(!AC)return;const n=AC.sampleRate*.7|0,buf=AC.createBuffer(1,n,AC.sampleRate),d=buf.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=AC.createBufferSource();s.buffer=buf;const f=AC.createBiquadFilter();f.type="bandpass";f.frequency.value=1200;const g=AC.createGain();g.gain.value=.25;s.connect(f);f.connect(g);g.connect(master);s.start()}
+const SONG=[[392,.75],[392,.25],[440,1],[392,1],[523.25,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587.33,1],[523.25,2],[392,.75],[392,.25],[783.99,1],[659.25,1],[523.25,1],[494,1],[440,1],[698.46,.75],[698.46,.25],[659.25,1],[523.25,1],[587.33,1],[523.25,2]];
+function song(){if(!AC)return;let t=AC.currentTime+.8;SONG.forEach(([f,b])=>{bell(f,t,b*.8);t+=b*.5})}
+$("mute").onclick=()=>{muted=!muted;if(master)master.gain.value=muted?0:.5;$("mute").textContent=muted?"🔇":"🔊"};
+
+/* ===== Latar bergerak ===== */
+for(let k=0;k<45;k++){const s=document.createElement("i");s.className="st";s.textContent=["✦","✧","♡"][k%3];s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-delay:${Math.random()*3}s;font-size:${8+Math.random()*12}px`;document.body.appendChild(s)}
+for(let k=0;k<16;k++){const p=document.createElement("i");p.className="pt";p.textContent=["🌸","💜","✨","🎀"][k%4];p.style.cssText=`left:${Math.random()*100}vw;font-size:${14+Math.random()*14}px;animation-duration:${9+Math.random()*8}s;animation-delay:-${Math.random()*14}s`;document.body.appendChild(p)}
+setInterval(()=>{const s=document.createElement("i");s.className="ss";s.style.cssText=`left:${50+Math.random()*50}vw;top:${Math.random()*40}vh`;document.body.appendChild(s);setTimeout(()=>s.remove(),1200)},6000);
+
+/* ===== Konfeti & balon ===== */
 const c=$("c"),x=c.getContext("2d");let W,H,P=[];
 function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener("resize",rs);
-function burst(){for(let n=0;n<150;n++)P.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*15,vy:Math.random()*-15-2,s:5+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:150})}
+function burst(){pop();for(let n=0;n<150;n++)P.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*15,vy:Math.random()*-15-2,s:5+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:150})}
 (function loop(){x.clearRect(0,0,W,H);P=P.filter(p=>p.l>0);P.forEach(p=>{p.vy+=.25;p.x+=p.vx;p.y+=p.vy;p.r+=.2;p.l--;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="hsl("+p.h+",90%,65%)";x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});requestAnimationFrame(loop)})();
 function balloon(){const b=document.createElement("div");b.className="b";b.textContent=["🎈","🎉","💜","🎁","🌸"][Math.random()*5|0];b.style.left=Math.random()*92+"vw";b.style.animationDuration=(5+Math.random()*4)+"s";document.body.appendChild(b);setTimeout(()=>b.remove(),10000)}
-let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n>=a.length)clearInterval(ty)},28)}
+
+/* ===== Alur ===== */
+let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n%2===0)tick();if(n>=a.length)clearInterval(ty)},28)}
 let i=0;
-$("open").onclick=()=>{$("s0").classList.remove("on");$("s1").classList.add("on");burst();say(M[0])};
-$("next").onclick=()=>{i++;if(i<M.length){say(M[i]);if(i===M.length-1)$("next").textContent="Tiup lilin 🎂"}else{$("bub").hidden=true;$("next").hidden=true;$("fin").hidden=false;burst()}};
+$("open").onclick=()=>{initAudio();$("mute").hidden=false;$("s0").classList.remove("on");$("s1").classList.add("on");burst();chime();say(M[0])};
+$("next").onclick=()=>{i++;chime();if(i<M.length){say(M[i]);if(i===M.length-1)$("next").textContent="Tiup lilin 🎂"}else{$("bub").hidden=true;$("next").hidden=true;$("fin").hidden=false;burst()}};
 let blown=false;
-$("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";
+$("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";blow();song();
 setTimeout(burst,500);setTimeout(burst,1000);setInterval(balloon,500);
-$("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊"+(dari?"<br><small>— dari "+dari.replace(/[<>&]/g,"")+", sahabat onlinemu</small>":"<br><small>— dari sahabat onlinemu</small>")};
+$("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊<br><small>— dari "+(dari||"sahabat onlinemu")+(dari?", sahabat onlinemu":"")+"</small>"};
 </script></body></html>
