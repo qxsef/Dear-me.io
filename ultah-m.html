@@ -32,7 +32,17 @@ h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
 .b{position:fixed;bottom:-80px;font-size:2.6rem;animation:up linear forwards;pointer-events:none;z-index:4}@keyframes up{to{transform:translateY(-120vh)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
-<div class="bg"><i class="blob"></i><i class="blob"></i><i class="blob"></i></div>
+<div class="bg">
+<div class="sun"></div>
+<i class="cl c1"></i><i class="cl c2"></i><i class="cl c3"></i>
+<svg class="land" viewBox="0 0 800 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<path d="M0 230L120 150 230 215 350 120 480 220 600 140 720 210 800 170V400H0Z" fill="#9b7fd4" opacity=".75"/>
+<path d="M0 285Q120 215 250 262T500 252T800 258V400H0Z" fill="#7d62b8"/>
+<path d="M0 325Q200 275 400 318T800 303V400H0Z" fill="#5f4a99"/>
+<path d="M0 362Q250 332 450 362T800 347V400H0Z" fill="#46357a"/>
+<g fill="#2f2260"><path d="M40 352l15-55 15 55z"/><path d="M95 352l12-42 12 42z"/><path d="M700 352l14-48 14 48z"/><path d="M750 352l17-60 17 60z"/><path d="M785 352l10-34 10 34z"/></g>
+</svg>
+</div>
 <canvas id="c"></canvas>
 <button id="mute" class="mute" aria-label="Suara" hidden>🔊</button>
 
