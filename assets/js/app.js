@@ -30,7 +30,13 @@ async function renderChrome(){
   const ft = document.getElementById("foot");
   if(ft) ft.innerHTML = `<p><b>DEAR ME</b> — <span data-i18n="tagline"></span></p><p class="small">© ${new Date().getFullYear()} · <span data-i18n="footer"></span></p>`;
   document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
-  const o = document.getElementById("outBtn"); if(o) o.addEventListener("click", logout);
+  const o = document.getElementById("outBtn"); if(o) o.addEventListener("click", logout);const side = document.querySelector(".side");
+if(side){
+  const tb = document.createElement("button"); tb.className = "btn ghost"; tb.id = "themeBtn"; tb.setAttribute("aria-label","Theme");
+  const sync = ()=>{ tb.textContent = document.documentElement.dataset.theme==="dark" ? "☀️" : "🌙"; };
+  tb.onclick = ()=>{ const d = document.documentElement.dataset.theme==="dark"; if(d) delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = "dark"; try{ localStorage.setItem("dearme_theme", d?"light":"dark"); }catch(e){} sync(); };
+  sync(); side.prepend(tb);
+}
   applyLang();
 }
 document.addEventListener("DOMContentLoaded", renderChrome);
