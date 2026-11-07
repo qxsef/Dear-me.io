@@ -29,3 +29,9 @@ input:focus,textarea:focus{border-color:var(--l4);outline:none}
 .toast{background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;animation:in .25s}.toast.err{background:#a03a62}
 @keyframes in{from{opacity:0;transform:translateY(8px)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html[data-theme=dark]{--bg:#17121f;--l1:#2a2140;--l2:#3d3060;--l3:#7e63b8;--ink:#cdb8f5;--text:#e8e0f5}
+html[data-theme=dark] body{background:linear-gradient(180deg,#17121f,#1d1628 60%)}
+html[data-theme=dark] #nav{background:rgba(23,18,31,.88)}
+html[data-theme=dark] .card,html[data-theme=dark] input,html[data-theme=dark] textarea,html[data-theme=dark] select,html[data-theme=dark] .tag,html[data-theme=dark] .rx{background:#211a30;color:var(--text)}
+html[data-theme=dark] .card.tint,html[data-theme=dark] .mcard{background:var(--l1)}
+html[data-theme=dark] .btn:hover{background:var(--l3)}
