@@ -1,3 +1,4 @@
+try{ if(localStorage.getItem("dearme_theme")==="dark") document.documentElement.dataset.theme="dark"; }catch(e){}
 const cfg = window.DEARME_CONFIG || {};
 const configured = cfg.SUPABASE_URL && !cfg.SUPABASE_URL.includes("YOUR-PROJECT");
 const sb = configured && window.supabase ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
