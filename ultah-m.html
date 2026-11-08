@@ -128,15 +128,15 @@ body.night .btn.ghost{background:rgba(255,255,255,.15);color:#f3e9ff}
 <div id="nv"><button class="btn ghost" id="prev" hidden>⬅ Mundur</button><button class="btn" id="next">Lanjut ➜</button></div>
 <div id="fin" hidden>
 <div id="pw" class="pw" hidden><img id="ph" src="mita.jpg" alt="Mita" onerror="this.parentNode.remove()"><i>💖</i><i>💗</i><i>💕</i><i>💞</i></div>
-<h1>Selamat Ulang Tahun, my Babygirl aku! 🎉</h1>
+<h1>Selamat Ulang Tahun, my Babygirl aku! 🎉 love bertubi-tubi walaupun sedikit</h1>
 <div class="cake" id="cake"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
 <p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
-<p id="song" class="big fade" hidden>🎶 Happy Birthday, ri sayang ! 🎶</p>
+<p id="song" class="big fade" hidden>🎶 Happy Birthday, ri sayang , you so gorgeous✨! 🎶</p>
 <p id="sayang" class="big fade" hidden></p>
 <div id="fbtns" hidden><button class="btn" id="fwbtn">🎆 Kembang api</button><button class="btn" id="lvbtn">💖 Love</button><button class="btn" id="kpbtn">💌 Tulis kesan & pesan</button></div>
 <div id="kp" hidden>
 <h2 class="big" style="margin:.4em 0">💌 Kesan & Pesan</h2>
-<input id="kpnama" maxlength="40" placeholder="Namamu" value="Mita">
+<input id="kpnama" maxlength="40" placeholder="Namamu" value="sayangnya siapaa?">
 <textarea id="kpkesan" rows="3" maxlength="1000" placeholder="Kesanmu selama jadi sahabat online…"></textarea>
 <textarea id="kppesan" rows="3" maxlength="1000" placeholder="Pesan untukku…"></textarea>
 <button class="btn" id="kpsend">Kirim 💌</button>
@@ -283,7 +283,7 @@ $("kpsend").onclick=async()=>{
     if(!KP.u||KP.u.includes("YOUR-PROJECT"))throw 0;
     const r=await fetch(KP.u+"/rest/v1/ultah_pesan",{method:"POST",headers:{"Content-Type":"application/json",apikey:KP.k,Authorization:"Bearer "+KP.k,Prefer:"return=minimal"},body:JSON.stringify({dari,kesan,pesan})});
     if(!r.ok)throw 0;
-    $("kp").innerHTML='<p class="big fade">Terkirim 💌<br>Makasih ya, Mita! Pesanmu sudah sampai 💜</p>';
+    $("kp").innerHTML='<p class="big fade">Terkirim 💌<br>Makasih ya, darling! Pesanmu sudah sampai 💜</p>';
   }catch(e){
     try{await navigator.clipboard.writeText("Kesan: "+kesan+"\nPesan: "+pesan+"\n— "+dari)}catch(_){}
     $("kpmsg").textContent="Gagal terkirim 😢 Teksnya sudah disalin, kirim manual lewat chat ya.";$("kpsend").disabled=false}
@@ -299,5 +299,5 @@ $("prev").onclick=()=>{if(i>0){i--;chime();show()}};
 let blown=false;
 $("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";blow();
 setTimeout(burst,500);setTimeout(burst,1000);setInterval(()=>{if(!LITE||Math.random()<.4)balloon()},500);finale();
-$("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊<br><small>— dari "+(dari||"sahabat onlinemu")+(dari?", sahabat onlinemu":"")+"</small>"};
+$("wish").innerHTML="Semoga semua doamu terkabul, my babygirl aku 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊<br><small>— dari "+(dari||"sahabat onlinemu")+(dari?", sahabat onlinemu":"")+"</small>"};
 </script></body></html>
