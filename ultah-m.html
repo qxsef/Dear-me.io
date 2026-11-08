@@ -74,6 +74,13 @@ body.night .moon{opacity:1}
 .lite .scene.on{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.85)}
 .lite.night .scene.on{background:rgba(28,14,58,.85)}
 .lite.night .land{filter:none;opacity:.5}
+/* ===== Mundur/maju, panel hilang saat love, lagu ===== */
+.scene{transition:opacity .7s}
+#s1.hide{opacity:0;pointer-events:none}
+#nv .btn{margin:14px 5px 0}
+.btn.ghost{background:rgba(255,255,255,.7);color:#4b2e83;border:2px solid #9575cd;box-shadow:none}
+body.night .btn.ghost{background:rgba(255,255,255,.15);color:#f3e9ff}
+#song{margin:6px 0}
 </style></head><body>
 <div class="bg">
 <div class="sun"></div><div class="moon"></div>
@@ -116,12 +123,13 @@ body.night .moon{opacity:1}
 <path d="M92 152L76 143V163Z M108 152L124 143V163Z" fill="#ff8fc7"/><circle cx="100" cy="153" r="5.5" fill="#ff6fb0"/>
 </g></svg>
 <div class="bub" id="bub"><span id="txt"></span></div>
-<button class="btn" id="next">Lanjut ➜</button>
+<div id="nv"><button class="btn ghost" id="prev" hidden>⬅ Mundur</button><button class="btn" id="next">Lanjut ➜</button></div>
 <div id="fin" hidden>
 <div id="pw" class="pw" hidden><img id="ph" src="mita.jpg" alt="Mita" onerror="this.parentNode.remove()"><i>💖</i><i>💗</i><i>💕</i><i>💞</i></div>
 <h1>Selamat Ulang Tahun, Mita Aulia Putri! 🎉</h1>
 <div class="cake" id="cake"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
 <p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
+<p id="song" class="big fade" hidden>🎶 Happy Birthday, Mita! 🎶</p>
 <p id="sayang" class="big fade" hidden></p>
 <div id="fbtns" hidden><button class="btn" id="fwbtn">🎆 Kembang api</button><button class="btn" id="lvbtn">💖 Love</button></div>
 </div>
@@ -159,7 +167,13 @@ function pop(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),g=AC
 function chime(){if(!AC)return;const t=AC.currentTime;[523.25,659.25,783.99,1046.5].forEach((f,i)=>bell(f,t+i*.09,1.1))}
 function blow(){if(!AC)return;const n=AC.sampleRate*.7|0,buf=AC.createBuffer(1,n,AC.sampleRate),d=buf.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=AC.createBufferSource();s.buffer=buf;const f=AC.createBiquadFilter();f.type="bandpass";f.frequency.value=1200;const g=AC.createGain();g.gain.value=.25;s.connect(f);f.connect(g);g.connect(master);s.start()}
 const SONG=[[392,.75],[392,.25],[440,1],[392,1],[523.25,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587.33,1],[523.25,2],[392,.75],[392,.25],[783.99,1],[659.25,1],[523.25,1],[494,1],[440,1],[698.46,.75],[698.46,.25],[659.25,1],[523.25,1],[587.33,1],[523.25,2]];
-function song(){if(!AC)return;let t=AC.currentTime+.8;SONG.forEach(([f,b])=>{bell(f,t,b*.8);t+=b*.5})}
+function hbd(){
+  if(!AC)return;
+  const U=.62,t0=AC.currentTime+.6;let t=t0;
+  SONG.forEach(([f,b])=>{bell(f,t,b*U*1.6);t+=b*U});
+  const C=[130.81,261.63,329.63,392],G=[98,196,246.94,293.66],F=[87.31,174.61,220,261.63];
+  [C,G,G,C,C,F,F,C].forEach((ch,k)=>{const s=t0+k*3*U;ch.forEach(f=>tone(f,s,3*U*1.1,f<150?.12:.045,"triangle",.05))});
+}
 function boom(){if(!AC)return;const t=AC.currentTime,n=AC.sampleRate*.9|0,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.5);const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type="lowpass";f.frequency.value=700;const g=AC.createGain();g.gain.value=.55;s.connect(f);f.connect(g);g.connect(master);s.start(t);
 const o=AC.createOscillator(),og=AC.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(35,t+.4);og.gain.setValueAtTime(.4,t);og.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(og);og.connect(master);o.start(t);o.stop(t+.5);
 for(let k=0;k<5;k++)tone(2500+Math.random()*2500,t+.1+Math.random()*.5,.04,.03)}
@@ -197,9 +211,11 @@ function heartPts(sc){const a=[],st=LITE?.12:.07;for(let t=0;t<Math.PI*2;t+=st)a
 function textPts(txt,w,h){const o=document.createElement("canvas");o.width=w;o.height=h;const g=o.getContext("2d");g.fillStyle="#000";g.font="900 "+(h*.8|0)+"px system-ui,sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(txt,w/2,h/2);
   const d=g.getImageData(0,0,w,h).data,a=[],st=Math.max(4,(w/(LITE?45:70))|0);for(let yy=0;yy<h;yy+=st)for(let xx=0;xx<w;xx+=st)if(d[(yy*w+xx)*4+3]>128)a.push([xx-w/2,yy-h/2]);return a}
 function loveShow(cb){
-  const cx=innerWidth/2,cy=innerHeight*.36,sc=Math.min(innerWidth,innerHeight*.9)/42;
+  const p=$("s1");p.classList.add("hide");
+  const cx=innerWidth/2,cy=innerHeight*.4,sc=Math.min(innerWidth,innerHeight*.9)/42;
   shape(heartPts(sc).concat(heartPts(sc*.6)),cx,cy,330,200);chime();
-  setTimeout(()=>{const w=Math.min(innerWidth*.9,600);shape(textPts("LOVE",w|0,(w*.32)|0),cx,cy,45,230);chime();if(cb)setTimeout(cb,1500)},3800)}
+  setTimeout(()=>{const w=Math.min(innerWidth*.9,600);shape(textPts("LOVE",w|0,(w*.32)|0),cx,cy,45,230);chime()},3800);
+  setTimeout(()=>{p.classList.remove("hide");if(cb)cb()},8000)}
 let fl=0,slow=0,fd=false;
 function floop(t){
   if(LITE&&t-fl<33){requestAnimationFrame(floop);return}
@@ -234,22 +250,25 @@ function npcs(){
 function showPhoto(){
   $("cake").hidden=true;
   const w=$("pw");if(w){w.hidden=false;$("ph").classList.add("show")}
+  $("song").hidden=false;hbd();
   setTimeout(()=>{const s=$("sayang");s.innerHTML=SAYANG;s.hidden=false;$("fbtns").hidden=false},w?1800:300)}
 function finale(){
   document.body.classList.add("night");$("s1").classList.add("done");
   setTimeout(npcs,1500);
   setTimeout(()=>{launch();setInterval(()=>{if(Math.random()<(LITE?.5:.8))launch()},1300)},2600);
-  setTimeout(()=>loveShow(showPhoto),6000)}
+  setTimeout(()=>loveShow(showPhoto),5000)}
 $("fwbtn").onclick=()=>{for(let k=0;k<4;k++)setTimeout(()=>launch(),k*260)};
 $("lvbtn").onclick=()=>loveShow();
 
 /* ===== Alur ===== */
 let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n%2===0)tick();if(n>=a.length)clearInterval(ty)},28)}
 let i=0;
-$("open").onclick=()=>{initAudio();$("mute").hidden=false;$("s0").classList.remove("on");$("s1").classList.add("on");burst();chime();say(M[0])};
-$("next").onclick=()=>{i++;chime();if(i<M.length){say(M[i]);if(i===M.length-1)$("next").textContent="Tiup lilin 🎂"}else{$("bub").hidden=true;$("next").hidden=true;$("fin").hidden=false;burst()}};
+function show(){say(M[i]);$("prev").hidden=i===0;$("next").textContent=i===M.length-1?"Tiup lilin 🎂":"Lanjut ➜"}
+$("open").onclick=()=>{initAudio();$("mute").hidden=false;$("s0").classList.remove("on");$("s1").classList.add("on");burst();chime();show()};
+$("next").onclick=()=>{chime();if(i<M.length-1){i++;show()}else{clearInterval(ty);$("bub").hidden=true;$("nv").hidden=true;$("fin").hidden=false;burst()}};
+$("prev").onclick=()=>{if(i>0){i--;chime();show()}};
 let blown=false;
-$("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";blow();song();
+$("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";blow();
 setTimeout(burst,500);setTimeout(burst,1000);setInterval(()=>{if(!LITE||Math.random()<.4)balloon()},500);finale();
 $("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊<br><small>— dari "+(dari||"sahabat onlinemu")+(dari?", sahabat onlinemu":"")+"</small>"};
 </script></body></html>
