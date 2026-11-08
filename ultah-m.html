@@ -81,6 +81,8 @@ body.night .moon{opacity:1}
 .btn.ghost{background:rgba(255,255,255,.7);color:#4b2e83;border:2px solid #9575cd;box-shadow:none}
 body.night .btn.ghost{background:rgba(255,255,255,.15);color:#f3e9ff}
 #song{margin:6px 0}
+  #kp input,#kp textarea{width:100%;margin-top:10px;padding:12px 14px;border:2px solid #d8c4f4;border-radius:14px;font:inherit;background:rgba(255,255,255,.92);color:#2b1b4d}
+#kp textarea{resize:vertical}
 </style></head><body>
 <div class="bg">
 <div class="sun"></div><div class="moon"></div>
@@ -131,10 +133,20 @@ body.night .btn.ghost{background:rgba(255,255,255,.15);color:#f3e9ff}
 <p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
 <p id="song" class="big fade" hidden>🎶 Happy Birthday, Mita! 🎶</p>
 <p id="sayang" class="big fade" hidden></p>
-<div id="fbtns" hidden><button class="btn" id="fwbtn">🎆 Kembang api</button><button class="btn" id="lvbtn">💖 Love</button></div>
+<div id="fbtns" hidden><button class="btn" id="fwbtn">🎆 Kembang api</button><button class="btn" id="lvbtn">💖 Love</button><button class="btn" id="kpbtn">💌 Tulis kesan & pesan</button></div>
+<div id="kp" hidden>
+<h2 class="big" style="margin:.4em 0">💌 Kesan & Pesan</h2>
+<input id="kpnama" maxlength="40" placeholder="Namamu" value="Mita">
+<textarea id="kpkesan" rows="3" maxlength="1000" placeholder="Kesanmu selama jadi sahabat online…"></textarea>
+<textarea id="kppesan" rows="3" maxlength="1000" placeholder="Pesan untukku…"></textarea>
+<button class="btn" id="kpsend">Kirim 💌</button>
+<p id="kpmsg" style="min-height:1.4em;margin:.4em 0 0"></p>
+</div>
 </div>
 </div>
 
+<script>
+<script src="assets/js/config.js"></script>
 <script>
 const $=id=>document.getElementById(id), dari=(new URLSearchParams(location.search).get("dari")||"").slice(0,30).replace(/[<>&"]/g,"");
 const M=["Haloo Mita! 👋 Ada yang spesial hari ini, jangan kabur dulu ya.",
@@ -259,6 +271,23 @@ function finale(){
   setTimeout(()=>loveShow(showPhoto),5000)}
 $("fwbtn").onclick=()=>{for(let k=0;k<4;k++)setTimeout(()=>launch(),k*260)};
 $("lvbtn").onclick=()=>loveShow();
+
+  /* ===== Kesan & pesan ===== */
+const KP={u:(window.DEARME_CONFIG||{}).SUPABASE_URL,k:(window.DEARME_CONFIG||{}).SUPABASE_ANON_KEY};
+$("kpbtn").onclick=()=>{$("kp").hidden=false;$("kpbtn").hidden=true;$("kp").scrollIntoView({behavior:"smooth",block:"center"})};
+$("kpsend").onclick=async()=>{
+  const dari=$("kpnama").value.trim()||"Mita",kesan=$("kpkesan").value.trim(),pesan=$("kppesan").value.trim();
+  if(!kesan){$("kpmsg").textContent="Isi kesannya dulu ya 🥺";return}
+  $("kpsend").disabled=true;$("kpmsg").textContent="Mengirim…";
+  try{
+    if(!KP.u||KP.u.includes("YOUR-PROJECT"))throw 0;
+    const r=await fetch(KP.u+"/rest/v1/ultah_pesan",{method:"POST",headers:{"Content-Type":"application/json",apikey:KP.k,Authorization:"Bearer "+KP.k,Prefer:"return=minimal"},body:JSON.stringify({dari,kesan,pesan})});
+    if(!r.ok)throw 0;
+    $("kp").innerHTML='<p class="big fade">Terkirim 💌<br>Makasih ya, Mita! Pesanmu sudah sampai 💜</p>';
+  }catch(e){
+    try{await navigator.clipboard.writeText("Kesan: "+kesan+"\nPesan: "+pesan+"\n— "+dari)}catch(_){}
+    $("kpmsg").textContent="Gagal terkirim 😢 Teksnya sudah disalin, kirim manual lewat chat ya.";$("kpsend").disabled=false}
+};
 
 /* ===== Alur ===== */
 let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n%2===0)tick();if(n>=a.length)clearInterval(ty)},28)}
