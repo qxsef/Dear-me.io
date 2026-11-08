@@ -28,7 +28,6 @@ h1{font-size:clamp(1.7rem,8vw,2.6rem);margin:.2em 0;line-height:1.2}
 .bub:before{content:"";position:absolute;top:-12px;left:50%;margin-left:-12px;border:12px solid transparent;border-top:0;border-bottom-color:#fff}
 .cake{font-size:5.5rem;line-height:1;cursor:pointer;user-select:none;margin:6px 0}.cake:active{transform:scale(.92)}
 .flame{display:inline-block;font-size:2.4rem;animation:fl .4s infinite alternate}@keyframes fl{to{transform:scale(1.15) rotate(6deg)}}
-#ph{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 8px 20px rgba(103,70,154,.3)}
 .b{position:fixed;bottom:-80px;font-size:2.6rem;animation:up linear forwards;pointer-events:none;z-index:4}@keyframes up{to{transform:translateY(-120vh)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 body{background:linear-gradient(180deg,#7a62c9 0%,#c79bea 30%,#ff9ec4 62%,#ffd9b0 88%)}
@@ -43,9 +42,41 @@ body{background:linear-gradient(180deg,#7a62c9 0%,#c79bea 30%,#ff9ec4 62%,#ffd9b
 .ff{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff3a0;box-shadow:0 0 10px 4px rgba(255,240,150,.8);animation:ffm 8s ease-in-out infinite alternate}
 @keyframes ffm{0%{transform:translate(0,0);opacity:.2}50%{opacity:1}100%{transform:translate(var(--dx),-70px);opacity:.3}}
 .scene.on{display:block;background:rgba(255,255,255,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:28px;box-shadow:0 12px 40px rgba(60,30,110,.28);margin:12px;width:calc(100% - 24px);max-height:94vh;overflow:auto}
+/* ===== Malam, NPC, kembang api ===== */
+#fw{z-index:4}
+body::before{content:"";position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,#0a0620 0%,#1d1050 45%,#4a2a7a 80%,#7a4a9a 100%);opacity:0;transition:opacity 4s}
+body.night::before{opacity:1}
+body.night{color:#f3e9ff}
+body.night .sun{animation:none;opacity:0}
+.sun{transition:opacity 3s}
+body.night .cl{opacity:.12!important}
+.land{transition:filter 4s}body.night .land{filter:brightness(.4)}
+body.night .scene.on{background:rgba(28,14,58,.58)}
+.moon{position:absolute;right:12vw;top:9vh;width:14vmin;height:14vmin;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe8,#f3e6b0 60%,#d9c98a);box-shadow:0 0 40px 10px rgba(255,248,200,.5);opacity:0;transition:opacity 4s 1s}
+body.night .moon{opacity:1}
+.fade{animation:fi 1.6s both}@keyframes fi{from{opacity:0;transform:translateY(10px)}}
+#fbtns .btn{margin:14px 4px 0}
+.npc{position:fixed;bottom:1vh;width:min(24vw,100px);z-index:3;pointer-events:none;transition:left 1.6s ease-out,right 1.6s ease-out}
+.npc.s{width:min(18vw,80px)}
+.npc svg{width:100%;height:auto;animation:jump .6s ease-in-out infinite alternate}@keyframes jump{to{transform:translateY(-16px)}}
+.wave2{transform-origin:64px 160px;animation:wv2 .6s infinite alternate ease-in-out}@keyframes wv2{to{transform:rotate(28deg)}}
+/* ===== Foto & mode ringan ===== */
+.pw{position:relative;display:inline-block;margin:6px 0}
+#ph{display:block;width:min(42vw,150px);height:min(42vw,150px);border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 0 0 4px #ff9fd0,0 0 28px 8px rgba(255,150,210,.65)}
+#ph.show{animation:popin .8s cubic-bezier(.2,1.6,.4,1)}@keyframes popin{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1)}}
+.pw i{position:absolute;font-style:normal;font-size:1.3rem;animation:fh 2.4s ease-in-out infinite alternate}
+.pw i:nth-child(2){left:-10px;top:0}.pw i:nth-child(3){right:-10px;top:12px;animation-delay:.5s}.pw i:nth-child(4){left:-6px;bottom:4px;animation-delay:1s}.pw i:nth-child(5){right:-6px;bottom:0;animation-delay:1.5s}
+@keyframes fh{to{transform:translateY(-8px) scale(1.2)}}
+.done .chibi{display:none}.done h1{font-size:1.35rem}.done .big{font-size:1.05rem}
+.lite .pt,.lite .ss,.lite .st{display:none}
+.lite .ff:nth-child(odd){display:none}
+.lite .cl{filter:none}
+.lite .scene.on{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.85)}
+.lite.night .scene.on{background:rgba(28,14,58,.85)}
+.lite.night .land{filter:none;opacity:.5}
 </style></head><body>
 <div class="bg">
-<div class="sun"></div>
+<div class="sun"></div><div class="moon"></div>
 <i class="cl c1"></i><i class="cl c2"></i><i class="cl c3"></i>
 <svg class="land" viewBox="0 0 800 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
 <path d="M0 230L120 150 230 215 350 120 480 220 600 140 720 210 800 170V400H0Z" fill="#9b7fd4" opacity=".75"/>
@@ -55,8 +86,10 @@ body{background:linear-gradient(180deg,#7a62c9 0%,#c79bea 30%,#ff9ec4 62%,#ffd9b
 <g fill="#2f2260"><path d="M40 352l15-55 15 55z"/><path d="M95 352l12-42 12 42z"/><path d="M700 352l14-48 14 48z"/><path d="M750 352l17-60 17 60z"/><path d="M785 352l10-34 10 34z"/></g>
 </svg>
 </div>
+<canvas id="fw"></canvas>
 <canvas id="c"></canvas>
 <button id="mute" class="mute" aria-label="Suara" hidden>🔊</button>
+<button id="lite" class="mute" style="right:62px;opacity:.6" aria-label="Mode ringan">⚡</button>
 
 <div id="s0" class="scene on">
 <div style="font-size:4rem">🎁</div>
@@ -85,10 +118,12 @@ body{background:linear-gradient(180deg,#7a62c9 0%,#c79bea 30%,#ff9ec4 62%,#ffd9b
 <div class="bub" id="bub"><span id="txt"></span></div>
 <button class="btn" id="next">Lanjut ➜</button>
 <div id="fin" hidden>
-<img id="ph" src="mita.jpg" alt="" onerror="this.remove()">
+<div id="pw" class="pw" hidden><img id="ph" src="mita.jpg" alt="Mita" onerror="this.parentNode.remove()"><i>💖</i><i>💗</i><i>💕</i><i>💞</i></div>
 <h1>Selamat Ulang Tahun, Mita Aulia Putri! 🎉</h1>
 <div class="cake" id="cake"><div><span class="flame" id="flame">🔥</span></div>🎂</div>
 <p id="wish" class="big">Make a wish dulu 🤫, lalu tap kuenya buat tiup lilin!</p>
+<p id="sayang" class="big fade" hidden></p>
+<div id="fbtns" hidden><button class="btn" id="fwbtn">🎆 Kembang api</button><button class="btn" id="lvbtn">💖 Love</button></div>
 </div>
 </div>
 
@@ -102,6 +137,12 @@ const M=["Haloo Mita! 👋 Ada yang spesial hari ini, jangan kabur dulu ya.",
 "Kalau lagi capek atau sedih, cerita aja ke aku. Kapan pun, aku dengerin 🫶",
 "Semoga tahun ini penuh hal baik, rezeki lancar, dan semua mimpimu kesampaian ✨",
 "Aku nggak bisa traktir kue beneran, jadi kue virtual dulu ya 🎂 Siap tiup lilin?"];
+const SAYANG="Sayang banget sama kamu, Mita 💜<br>Makasih udah jadi sahabat online yang paling spesial buatku."; // ganti teks sayang di sini
+
+/* ===== Mode ringan (HP kentang) ===== */
+let LITE=/[?&]lite=1/.test(location.search)||(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=3;
+function setLite(v){LITE=v;document.body.classList.toggle("lite",v);$("lite").style.opacity=v?1:.6}
+setLite(LITE);$("lite").onclick=()=>setLite(!LITE);
 
 /* ===== Suara (dibuat dari kode) ===== */
 let AC,master,muted=false;
@@ -119,21 +160,88 @@ function chime(){if(!AC)return;const t=AC.currentTime;[523.25,659.25,783.99,1046
 function blow(){if(!AC)return;const n=AC.sampleRate*.7|0,buf=AC.createBuffer(1,n,AC.sampleRate),d=buf.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=AC.createBufferSource();s.buffer=buf;const f=AC.createBiquadFilter();f.type="bandpass";f.frequency.value=1200;const g=AC.createGain();g.gain.value=.25;s.connect(f);f.connect(g);g.connect(master);s.start()}
 const SONG=[[392,.75],[392,.25],[440,1],[392,1],[523.25,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587.33,1],[523.25,2],[392,.75],[392,.25],[783.99,1],[659.25,1],[523.25,1],[494,1],[440,1],[698.46,.75],[698.46,.25],[659.25,1],[523.25,1],[587.33,1],[523.25,2]];
 function song(){if(!AC)return;let t=AC.currentTime+.8;SONG.forEach(([f,b])=>{bell(f,t,b*.8);t+=b*.5})}
+function boom(){if(!AC)return;const t=AC.currentTime,n=AC.sampleRate*.9|0,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.5);const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type="lowpass";f.frequency.value=700;const g=AC.createGain();g.gain.value=.55;s.connect(f);f.connect(g);g.connect(master);s.start(t);
+const o=AC.createOscillator(),og=AC.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(35,t+.4);og.gain.setValueAtTime(.4,t);og.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(og);og.connect(master);o.start(t);o.stop(t+.5);
+for(let k=0;k<5;k++)tone(2500+Math.random()*2500,t+.1+Math.random()*.5,.04,.03)}
+function whistle(){if(!AC)return;const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(500,t);o.frequency.exponentialRampToValueAtTime(1700,t+.7);g.gain.setValueAtTime(.06,t);g.gain.exponentialRampToValueAtTime(.001,t+.7);o.connect(g);g.connect(master);o.start(t);o.stop(t+.75)}
 $("mute").onclick=()=>{muted=!muted;if(master)master.gain.value=muted?0:.5;$("mute").textContent=muted?"🔇":"🔊"};
 
 /* ===== Latar bergerak ===== */
 for(let k=0;k<45;k++){const s=document.createElement("i");s.className="st";s.textContent=["✦","✧","♡"][k%3];s.style.cssText=`left:${Math.random()*100}vw;top:${Math.random()*55}vh;animation-delay:${Math.random()*3}s;font-size:${8+Math.random()*12}px`;document.body.appendChild(s)}
 for(let k=0;k<16;k++){const p=document.createElement("i");p.className="pt";p.textContent=["🌸","💜","✨","🎀"][k%4];p.style.cssText=`left:${Math.random()*100}vw;font-size:${14+Math.random()*14}px;animation-duration:${9+Math.random()*8}s;animation-delay:-${Math.random()*14}s`;document.body.appendChild(p)}
-setInterval(()=>{const s=document.createElement("i");s.className="ss";s.style.cssText=`left:${50+Math.random()*50}vw;top:${Math.random()*40}vh`;document.body.appendChild(s);setTimeout(()=>s.remove(),1200)},6000);
+setInterval(()=>{if(LITE)return;const s=document.createElement("i");s.className="ss";s.style.cssText=`left:${50+Math.random()*50}vw;top:${Math.random()*40}vh`;document.body.appendChild(s);setTimeout(()=>s.remove(),1200)},6000);
 
 for(let k=0;k<22;k++){const f=document.createElement("i");f.className="ff";f.style.cssText=`left:${Math.random()*100}vw;top:${55+Math.random()*38}vh;--dx:${(Math.random()-.5)*90}px;animation-duration:${5+Math.random()*6}s;animation-delay:-${Math.random()*8}s`;document.querySelector(".bg").appendChild(f)}
 
 /* ===== Konfeti & balon ===== */
-const c=$("c"),x=c.getContext("2d");let W,H,P=[];
+const c=$("c"),x=c.getContext("2d");let W,H,P=[],cl=0;
 function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener("resize",rs);
-function burst(){pop();for(let n=0;n<150;n++)P.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*15,vy:Math.random()*-15-2,s:5+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:150})}
-(function loop(){x.clearRect(0,0,W,H);P=P.filter(p=>p.l>0);P.forEach(p=>{p.vy+=.25;p.x+=p.vx;p.y+=p.vy;p.r+=.2;p.l--;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="hsl("+p.h+",90%,65%)";x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});requestAnimationFrame(loop)})();
+function burst(){pop();const N=LITE?70:150;for(let n=0;n<N;n++)P.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*15,vy:Math.random()*-15-2,s:5+Math.random()*6,r:Math.random()*6,h:Math.random()*360,l:150})}
+let cd=false;
+function cloop(t){
+  if(LITE&&t-cl<33){requestAnimationFrame(cloop);return}
+  cl=t;
+  if(P.length||cd){x.clearRect(0,0,W,H);const k=LITE?2:1;P=P.filter(p=>p.l>0);P.forEach(p=>{p.vy+=.25*k;p.x+=p.vx*k;p.y+=p.vy*k;p.r+=.2*k;p.l-=k;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle="hsl("+p.h+",90%,65%)";x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});cd=P.length>0}
+  requestAnimationFrame(cloop)}
+requestAnimationFrame(cloop);
 function balloon(){const b=document.createElement("div");b.className="b";b.textContent=["🎈","🎉","💜","🎁","🌸"][Math.random()*5|0];b.style.left=Math.random()*92+"vw";b.style.animationDuration=(5+Math.random()*4)+"s";document.body.appendChild(b);setTimeout(()=>b.remove(),10000)}
+
+/* ===== Kembang api, hati, LOVE ===== */
+const fc=$("fw"),fx=fc.getContext("2d");let FW=[],RK=[];
+function frs(){fc.width=innerWidth;fc.height=innerHeight}frs();addEventListener("resize",frs);
+function explode(px,py,hue){boom();const n=LITE?45:80,sp=3+Math.random()*3;
+  for(let k=0;k<n;k++){const a=Math.PI*2*k/n+Math.random()*.1,v=sp*(.5+Math.random()*.6);FW.push({x:px,y:py,vx:Math.cos(a)*v,vy:Math.sin(a)*v,h:hue+Math.random()*30,l:0,m:70+Math.random()*40,g:.045})}}
+function launch(tx){if(RK.length>(LITE?3:8))return;whistle();RK.push({x:tx!=null?tx:innerWidth*(.1+Math.random()*.8),y:innerHeight,ty:innerHeight*(.12+Math.random()*.3),h:Math.random()*360})}
+function shape(pts,cx,cy,hue,m){if(FW.length>(LITE?900:2500))return;boom();pts.forEach((q,k)=>FW.push({x:cx,y:cy,tx:cx+q[0],ty:cy+q[1],h:hue+(k%20),l:0,m:m}))}
+function heartPts(sc){const a=[],st=LITE?.12:.07;for(let t=0;t<Math.PI*2;t+=st)a.push([16*Math.pow(Math.sin(t),3)*sc,-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*sc]);return a}
+function textPts(txt,w,h){const o=document.createElement("canvas");o.width=w;o.height=h;const g=o.getContext("2d");g.fillStyle="#000";g.font="900 "+(h*.8|0)+"px system-ui,sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(txt,w/2,h/2);
+  const d=g.getImageData(0,0,w,h).data,a=[],st=Math.max(4,(w/(LITE?45:70))|0);for(let yy=0;yy<h;yy+=st)for(let xx=0;xx<w;xx+=st)if(d[(yy*w+xx)*4+3]>128)a.push([xx-w/2,yy-h/2]);return a}
+function loveShow(cb){
+  const cx=innerWidth/2,cy=innerHeight*.36,sc=Math.min(innerWidth,innerHeight*.9)/42;
+  shape(heartPts(sc).concat(heartPts(sc*.6)),cx,cy,330,200);chime();
+  setTimeout(()=>{const w=Math.min(innerWidth*.9,600);shape(textPts("LOVE",w|0,(w*.32)|0),cx,cy,45,230);chime();if(cb)setTimeout(cb,1500)},3800)}
+let fl=0,slow=0,fd=false;
+function floop(t){
+  if(LITE&&t-fl<33){requestAnimationFrame(floop);return}
+  const dt=t-fl;fl=t;
+  if(!LITE&&(RK.length||FW.length)){if(dt>34)slow++;else if(slow>0)slow--;if(slow>45)setLite(true)}
+  if(RK.length||FW.length||fd){
+    const k=LITE?2:1,e=1-Math.pow(.91,k),dr=Math.pow(.985,k);
+    fx.clearRect(0,0,fc.width,fc.height);fx.globalCompositeOperation=LITE?"source-over":"lighter";
+    RK=RK.filter(r=>{r.y-=9*k;r.x+=Math.sin(r.y*.05)*.6*k;fx.fillStyle="hsl("+r.h+",100%,75%)";fx.fillRect(r.x,r.y,3,9);if(r.y<=r.ty){explode(r.x,r.y,r.h);return false}return true});
+    FW=FW.filter(p=>{p.l+=k;
+      if(p.tx!==undefined){
+        if(p.l<70){p.x+=(p.tx-p.x)*e;p.y+=(p.ty-p.y)*e}else{p.x=p.tx+Math.sin(p.l*.1+p.tx)*.8;p.y=p.ty+Math.cos(p.l*.1+p.ty)*.8}
+        const al=p.l>p.m-60?(p.m-p.l)/60:1;fx.fillStyle="hsla("+p.h+",100%,"+(65+Math.sin(p.l*.3+p.tx)*15)+"%,"+Math.max(al,0)+")";fx.beginPath();fx.arc(p.x,p.y,2.6,0,6.3);fx.fill();
+      }else{
+        p.vx*=dr;p.vy=p.vy*dr+p.g*k;p.x+=p.vx*k;p.y+=p.vy*k;const al=Math.max(1-p.l/p.m,0);
+        fx.strokeStyle="hsla("+p.h+",100%,65%,"+al+")";fx.lineWidth=2;fx.beginPath();fx.moveTo(p.x-p.vx*2,p.y-p.vy*2);fx.lineTo(p.x,p.y);fx.stroke();
+      }
+      return p.l<p.m});
+    fx.globalCompositeOperation="source-over";fd=RK.length>0||FW.length>0}
+  requestAnimationFrame(floop)}
+requestAnimationFrame(floop);
+
+/* ===== NPC ===== */
+const npcSvg=(h,d,p)=>`<svg viewBox="0 0 200 250"><g class="bob"><ellipse cx="52" cy="125" rx="22" ry="42" fill="${h}"/><ellipse cx="148" cy="125" rx="22" ry="42" fill="${h}"/><circle cx="100" cy="100" r="62" fill="${h}"/><rect x="64" y="150" width="72" height="62" rx="30" fill="${d}"/><g class="wave2"><rect x="58" y="150" width="13" height="40" rx="6.5" fill="#ffe3d3" transform="rotate(35 65 160)"/></g><g class="wave"><rect x="129" y="150" width="13" height="40" rx="6.5" fill="#ffe3d3" transform="rotate(-35 135 160)"/></g><circle cx="100" cy="105" r="52" fill="#ffe3d3"/><path d="M46 102Q58 44 100 46Q142 44 154 102Q130 72 100 80Q70 72 46 102Z" fill="${h}"/><g class="eyes"><ellipse cx="78" cy="110" rx="11" ry="14" fill="#2b1b4d"/><ellipse cx="122" cy="110" rx="11" ry="14" fill="#2b1b4d"/><circle cx="82" cy="104" r="4.5" fill="#fff"/><circle cx="126" cy="104" r="4.5" fill="#fff"/></g><ellipse cx="62" cy="128" rx="9" ry="5" fill="#ff9fb8" opacity=".75"/><ellipse cx="138" cy="128" rx="9" ry="5" fill="#ff9fb8" opacity=".75"/><path d="M88 128Q100 146 112 128Z" fill="#c0506b"/><path d="M100 6L74 58Q100 66 126 58Z" fill="${p}"/><circle cx="100" cy="8" r="7" fill="#ffe66d"/></g></svg>`;
+function npcs(){
+  [["#2b1b4d","#ffe08a","#7ad7f0","left",1],["#7a3b2e","#ffb3d9","#9be8a8","right",1],["#f0b84a","#a8c7ff","#ff8fc7","left",19]].forEach((n,k)=>setTimeout(()=>{
+    if(LITE&&k===2)return;
+    const e=document.createElement("div");e.className="npc"+(k===2?" s":"");e.style[n[3]]="-30vw";e.innerHTML=npcSvg(n[0],n[1],n[2]);document.body.appendChild(e);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{e.style[n[3]]=n[4]+"vw"}))},k*350))}
+
+/* ===== Adegan setelah tiup lilin ===== */
+function showPhoto(){
+  $("cake").hidden=true;
+  const w=$("pw");if(w){w.hidden=false;$("ph").classList.add("show")}
+  setTimeout(()=>{const s=$("sayang");s.innerHTML=SAYANG;s.hidden=false;$("fbtns").hidden=false},w?1800:300)}
+function finale(){
+  document.body.classList.add("night");$("s1").classList.add("done");
+  setTimeout(npcs,1500);
+  setTimeout(()=>{launch();setInterval(()=>{if(Math.random()<(LITE?.5:.8))launch()},1300)},2600);
+  setTimeout(()=>loveShow(showPhoto),6000)}
+$("fwbtn").onclick=()=>{for(let k=0;k<4;k++)setTimeout(()=>launch(),k*260)};
+$("lvbtn").onclick=()=>loveShow();
 
 /* ===== Alur ===== */
 let ty;function say(t){clearInterval(ty);const e=$("txt");e.textContent="";const a=Array.from(t);let n=0;ty=setInterval(()=>{e.textContent+=a[n++];if(n%2===0)tick();if(n>=a.length)clearInterval(ty)},28)}
@@ -142,6 +250,6 @@ $("open").onclick=()=>{initAudio();$("mute").hidden=false;$("s0").classList.remo
 $("next").onclick=()=>{i++;chime();if(i<M.length){say(M[i]);if(i===M.length-1)$("next").textContent="Tiup lilin 🎂"}else{$("bub").hidden=true;$("next").hidden=true;$("fin").hidden=false;burst()}};
 let blown=false;
 $("cake").onclick=()=>{burst();if(blown)return;blown=true;$("flame").style.visibility="hidden";blow();song();
-setTimeout(burst,500);setTimeout(burst,1000);setInterval(balloon,500);
+setTimeout(burst,500);setTimeout(burst,1000);setInterval(()=>{if(!LITE||Math.random()<.4)balloon()},500);finale();
 $("wish").innerHTML="Semoga semua doamu terkabul, Mita 💜<br>Sehat terus, bahagia terus, jangan lupa senyum ya 😊<br><small>— dari "+(dari||"sahabat onlinemu")+(dari?", sahabat onlinemu":"")+"</small>"};
 </script></body></html>
